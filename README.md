@@ -15,3 +15,7 @@ from [Nautical Dictionary from MarineWaypoints.com](http://www.marinewaypoints.c
 > of an object he has sighted and reported.
 
 Read more in the [related ADR](doc/adr/0002-name-the-project-where-away.md)
+
+## Usage
+
+    npx where-away < bookmarks.json > bookmarks.html
