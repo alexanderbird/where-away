@@ -6,6 +6,8 @@ Date: 2020-11-06
 
 Accepted
 
+Extended By [6. Let the build step generate config for the client code](0006-let-the-build-step-generate-config-for-the-client-code.md)
+
 ## Context
 
 There are three main things the package must do:
