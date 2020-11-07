@@ -1,0 +1,27 @@
+{
+  "name": "where-away",
+  "version": "1.0.0",
+  "description": "Generate a keyboard-navigable personal bookmark webpage from your bookmarks manifest. ",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexanderbird/where-away.git"
+  },
+  "keywords": [
+    "bookmark",
+    "html",
+    "generator"
+  ],
+  "author": "Alexander Bird",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/alexanderbird/where-away/issues"
+  },
+  "homepage": "https://github.com/alexanderbird/where-away#readme"
+}
