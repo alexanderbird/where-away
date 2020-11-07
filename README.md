@@ -19,3 +19,12 @@ Read more in the [related ADR](doc/adr/0002-name-the-project-where-away.md)
 ## Usage
 
     npx where-away < bookmarks.json > bookmarks.html
+
+## Developer Notes
+
+### Testing
+
+ - unit tests: `npm test`
+ - acceptance test: `test/acceptance/main.sh`
+    - this creates a temp directory, initializes npm, installs this package, and
+      runs the cli command
