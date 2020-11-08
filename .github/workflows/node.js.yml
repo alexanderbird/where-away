@@ -54,6 +54,6 @@ jobs:
       - name: Publish Acceptance Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1.4
         with:
-          check_name: Acceprance Test Results
+          check_name: Acceptance Test Results
           github_token: ${{ secrets.GITHUB_TOKEN }}
           files: junit.acceptance.xml
