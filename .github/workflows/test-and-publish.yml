@@ -6,8 +6,6 @@ name: Test & Publish
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
   test:
@@ -28,7 +26,9 @@ jobs:
       with:
         name: test-results
         path: artifacts
-    - run: echo TODO -- publish to package registry # see https://github.com/marketplace/actions/npm-publish
+    - uses: JS-DevTools/npm-publish@v1
+      with:
+        token: ${{ secrets.NPM_TOKEN }}
 
   publish-test-results:
     name: "Publish Test Results"

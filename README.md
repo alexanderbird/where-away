@@ -7,6 +7,13 @@ navigable. The navigation is inspired by intelliJ and Excel's Alt+ shortcuts
 where a number/letter is superimposed/underlined on the actions, pressing the
 number/letter takes that action.
 
+## 0.x.x isn't usable
+
+I'm iterating towards something useful. I'll bump to 1.x.x once this actually
+does something. Until then, some or all of the output is canned data that passes
+my ATDD tests but won't help you (unless you want to get an idea of what the
+generated HTML is like).
+
 ## The name
 
 from [Nautical Dictionary from MarineWaypoints.com](http://www.marinewaypoints.com/learn/glossary/glossary.shtml)
