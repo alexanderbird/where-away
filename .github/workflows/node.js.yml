@@ -57,3 +57,27 @@ jobs:
           check_name: Acceptance Test Results
           github_token: ${{ secrets.GITHUB_TOKEN }}
           files: junit.acceptance.xml
+
+  other-report:
+    runs-on: ubuntu-18.04
+    needs: test
+    name: Generate Test Reports (alternate)
+    steps:
+      - name: Download Artifacts
+        id: download
+        uses: actions/download-artifact@v2
+        with:
+          name: test-results
+          path: artifacts
+      - name: Generate Report
+        id: xunit-viewer
+        uses: AutoModality/action-xunit-viewer@v1
+        with:
+          results: ${{steps.download.outputs.download-path}}
+      - name: The generated report
+        run: echo "The report is ${{ steps.xunit-viewer.outputs.report-file }}"    
+      - name: Attach the report
+        uses: actions/upload-artifact@v1
+        with:
+          name: alternate-results-path-reports
+          path: ${{steps.download.outputs.download-path}}
