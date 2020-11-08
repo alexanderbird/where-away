@@ -22,6 +22,8 @@ Read more in the [related ADR](doc/adr/0002-name-the-project-where-away.md)
 
 ## Developer Notes
 
+![Test & Publish](https://github.com/alexanderbird/where-away/workflows/Test%20&%20Publish/badge.svg)
+
 ### Testing
 
  - full regression: `npm test`. This runs all the test suites:
