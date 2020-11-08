@@ -36,3 +36,19 @@ Read more in the [related ADR](doc/adr/0002-name-the-project-where-away.md)
         file
       - then we use Jest in the test/acceptance/**/*.spec.js files to test the
         contents of that generated HTML file
+
+#### Notes on Acceptance Test suite
+
+To be truly end-to-end, each test run gets its own temporary directory and a
+fresh npm install of `where-away` from disk. This is good for having a
+convincing test, but it's slowish to start. (Aside: we refer to that temporary
+directory as a test sandbox.) If you're iterating on your test code without
+changing the production code, there's no need to create a new temporary
+directory every time. After running it once, copy the tmp path from the command
+output. It looks something like this:
+
+     ▸ Creating temp directory
+        ↳ /tmp/where-away-test.eNZbXKbi5
+
+On the next run, prefix the command with
+`TEST_SANDBOX=/tmp/where-away-test.eNZbXKbi5` to skip the sandbox creation step.
