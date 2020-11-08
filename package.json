@@ -11,7 +11,7 @@
   "scripts": {
     "test": "run-s test:*",
     "test:unit": "jest --testPathPattern=test/unit",
-    "test:acceptance": "RESULT_FILE=result.html TEST_SANDBOX=$(test/acceptance/create_sandbox.sh) jest --testPathPattern=test/acceptance"
+    "test:acceptance": "RESULT_FILE=result.html TEST_SANDBOX=$(RESULT_FILE=result.html test/acceptance/create_sandbox.sh) jest --testPathPattern=test/acceptance"
   },
   "repository": {
     "type": "git",
