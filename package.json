@@ -10,8 +10,8 @@
   },
   "scripts": {
     "test": "run-s test:*",
-    "test:unit": "jest --testPathPattern=test/unit",
-    "test:acceptance": "RESULT_FILE=result.html TEST_SANDBOX=$(RESULT_FILE=result.html test/acceptance/create_sandbox.sh) jest --testPathPattern=test/acceptance"
+    "test:unit": "JEST_JUNIT_OUTPUT_NAME=junit.unit.xml jest --testPathPattern=test/unit",
+    "test:acceptance": "JEST_JUNIT_OUTPUT_NAME=junit.acceptance.xml RESULT_FILE=result.html TEST_SANDBOX=$(RESULT_FILE=result.html test/acceptance/create_sandbox.sh) jest --testPathPattern=test/acceptance"
   },
   "repository": {
     "type": "git",
@@ -35,6 +35,9 @@
     "puppeteer": "^5.4.1"
   },
   "jest": {
-    "reporters": [ "default", "jest-junit" ]
+    "reporters": [
+      "default",
+      [ "jest-junit", { "outputDirectory": "artifacts" } ]
+    ]
   }
 }
