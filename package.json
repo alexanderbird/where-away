@@ -9,9 +9,9 @@
     "test": "test"
   },
   "scripts": {
-    "test": "jest",
+    "test": "run-s test:*",
     "test:unit": "jest --testPathPattern=test/unit",
-    "test:acceptance": "jest --testPathPattern=test/acceptance"
+    "test:acceptance": "RESULT_FILE=result.html TEST_SANDBOX=$(test/acceptance/create_sandbox.sh) jest --testPathPattern=test/acceptance"
   },
   "repository": {
     "type": "git",
@@ -30,6 +30,7 @@
   "homepage": "https://github.com/alexanderbird/where-away#readme",
   "devDependencies": {
     "jest": "^26.6.3",
+    "npm-run-all": "^4.1.5",
     "puppeteer": "^5.4.1"
   }
 }

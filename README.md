@@ -24,7 +24,13 @@ Read more in the [related ADR](doc/adr/0002-name-the-project-where-away.md)
 
 ### Testing
 
- - unit tests: `npm test`
- - acceptance test: `test/acceptance/main.sh`
-    - this creates a temp directory, initializes npm, installs this package, and
-      runs the cli command
+ - full regression: `npm test`. This runs all the test suites:
+ - test suites:
+   - unit tests: `npm run test:unit`
+   - acceptance test: `npm run test:acceptance`
+      - this creates a test sandbox by creating a temp directory, initializing
+        npm, installing where-away (from this directory)
+      - it also runs the `where-away` cli in that sandbox to generate an HTML
+        file
+      - then we use Jest in the test/acceptance/**/*.spec.js files to test the
+        contents of that generated HTML file
