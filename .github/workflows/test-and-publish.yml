@@ -19,13 +19,12 @@ jobs:
         with:
           node-version: 12.x
       - run: npm install
-      - run: JEST_JUNIT_OUTPUT_NAME=junit.unit.xml npm run test:unit
-      - run: JEST_JUNIT_OUTPUT_NAME=junit.acceptance.local.xml npm run test:acceptance
+      - run: npm run test:unit
+      - run: npm run test:acceptance:local
       - uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
-      - name: "Run acceptance tests against published package"
-        run: JEST_JUNIT_OUTPUT_NAME=junit.acceptance.production.xml SANDBOX_ENVIRONMENT=PRODUCTION npm run test:acceptance
+      - run: npm run test:acceptance:production
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
