@@ -14,6 +14,8 @@ class Sandbox {
 
   async openHtmlOutput() {
     const page = await this.withBrowser(b => b.newPage());
+    page.on('error',     error => console.error('Puppeteer page error:', error));
+    page.on('pageerror', error => console.error('Puppeteer page error:', error));
     await page.goto(`file://${htmlOutputPath}`);
     return page;
   }

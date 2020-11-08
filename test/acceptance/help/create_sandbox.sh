@@ -33,4 +33,5 @@ npm install $where_away_path > /dev/null
 
 log ②   executing where-away to generate an HTML file
 set -x
+echo "placeholder" > fake_external_link.html
 npx --no-install where-away > $RESULT_FILE
