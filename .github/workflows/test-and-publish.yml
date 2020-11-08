@@ -19,19 +19,18 @@ jobs:
         with:
           node-version: 12.x
       - run: npm install
-      - run: npm run test:unit
-      - run: npm run test:acceptance
+      - run: JEST_JUNIT_OUTPUT_NAME=junit.unit.xml npm run test:unit
+      - run: JEST_JUNIT_OUTPUT_NAME=junit.acceptance.local.xml npm run test:acceptance
+      - uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+      - name: "Run acceptance tests against published package"
+        run: SANDBOX_ENVIRONMENT=PRODUCTION JEST_JUNIT_OUTPUT_NAME=junit.acceptance.production.xml npm run test:acceptance
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
           name: test-results
           path: artifacts
-      - uses: JS-DevTools/npm-publish@v1
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
-
-      - name: "Run acceptance tests against published package"
-        run: SANDBOX_ENVIRONMENT=PRODUCTION npm run test:acceptance
 
   publish-test-results:
     name: "Publish Test Results"
@@ -54,9 +53,16 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           files: junit.unit.xml
 
-      - name: Publish Acceptance Test Results
+      - name: Publish Local Acceptance Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1.4
         with:
-          check_name: Acceptance Test Results
+          check_name: Local Acceptance Test Results
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          files: junit.acceptance.xml
+          files: junit.acceptance.local.xml
+
+      - name: Publish Production Acceptance Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v1.4
+        with:
+          check_name: Production Acceptance Test Results
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          files: junit.acceptance.production.xml
