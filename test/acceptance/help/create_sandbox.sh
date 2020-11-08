@@ -22,14 +22,20 @@ log "    ↳ $sandbox"
 # output to stdout so the Jest test can use it
 echo $sandbox
 
-log " ▸ Initializing npm and installing local where-away"
+log " ▸ Initializing npm"
 npm init -y --no-package-lock > /dev/null
 # Update package.json to mark the repo as private to reduce the irrelevant warnings
 tmp=$(mktemp /tmp/XXXXXXXXX)
 jq ". * { private: true }" < package.json > $tmp
 mv $tmp package.json 1>&2
 
-npm install $where_away_path > /dev/null
+if [[ "$SANDBOX_ENVIRONMENT" == "PRODUCTION" ]]; then
+  log " ▸ Installing where-away from NPM"
+  npm install where-away > /dev/null
+else
+  log " ▸ Installing local where-away"
+  npm install $where_away_path > /dev/null
+fi
 
 log ②   executing where-away to generate an HTML file
 set -x
