@@ -11,7 +11,7 @@
   "scripts": {
     "test": "run-s test:*",
     "test:unit": "JEST_JUNIT_OUTPUT_NAME=junit.unit.xml jest --testPathPattern=test/unit",
-    "test:acceptance": "JEST_JUNIT_OUTPUT_NAME=junit.acceptance.xml RESULT_FILE=result.html TEST_SANDBOX=${TEST_SANDBOX:-$(RESULT_FILE=result.html test/acceptance/create_sandbox.sh)} jest --testPathPattern=test/acceptance"
+    "test:acceptance": "JEST_JUNIT_OUTPUT_NAME=junit.acceptance.xml RESULT_FILE=result.html TEST_SANDBOX=${TEST_SANDBOX:-$(RESULT_FILE=result.html test/acceptance/help/create_sandbox.sh)} jest --testPathPattern=test/acceptance"
   },
   "repository": {
     "type": "git",
