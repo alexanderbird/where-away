@@ -41,7 +41,7 @@ module.exports = {
   },
 
   waitForNavigation: async function waitForNavigation(page) {
-    await page.waitForNavigation({ waitUntil: 'networkidle0' });
+    await new Promise(r => setTimeout(r, 100));
   },
 
   fillInInput: async function fillInInput(page, selector, value) {
