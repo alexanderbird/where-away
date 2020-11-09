@@ -36,6 +36,8 @@ else
   log " ▸ Installing local where-away"
   npm install $where_away_path > /dev/null
 fi
+jq -r '"    version: " + .version' < node_modules/where-away/package.json 1>&2
+
 
 log ②   executing where-away to generate an HTML file
 set -x
