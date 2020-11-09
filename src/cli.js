@@ -21,7 +21,7 @@ console.log(`
       function appleSauce() {
         document.querySelector('#main').innerHTML = \`
           <a data-keyboard-shortcut='a' href='./fake_external_link.html?another=true'>Another External Link</a>
-          <a onclick='navigateTo(param => \\\`./fake_external_link.html?param=\\\${param}&another=true&yes=please\\\`)'>
+          <a data-keyboard-shortcut='p' onclick='navigateTo(param => \\\`./fake_external_link.html?param=\\\${param}&another=true&yes=please\\\`)'>
             Another External Link with Parameter
           </a>
           

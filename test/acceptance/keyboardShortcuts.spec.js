@@ -31,5 +31,14 @@ describe('handling keyboard shortcuts', () => {
     expect(page.url()).toEqual('file://' + fakeExternalLinkPath + '?another=true');
   });
 
+  it('can follow external links with parameters from a child page', async () => {
+    const page = await sandbox.openHtmlOutput();
+    await keyup(page, linkData.child.key);
+    await keyup(page, linkData.child.parameter.key);
+    const arbitraryValue = 'GLLlllitZZen' + Math.random();
+    await fillInInput(page, 'input[type="text"]', arbitraryValue);
+    expect(page.url()).toEqual(`file://${fakeExternalLinkPath}?param=${arbitraryValue}&another=true&yes=please`);
+  });
+
   test.todo('can take you from a child page back to a parent page with the Escape key');
 });
