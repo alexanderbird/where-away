@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const pugTemplate = fs.readFileSync('src/template.pug');
 
-const template = `${pug.compile(pugTemplate, { filename: 'src/template.pug' })}
+const template = `${pug.compile(pugTemplate, { filename: 'src/template.pug', compileDebug: false })}
 module.exports = { template };
 `;
 
