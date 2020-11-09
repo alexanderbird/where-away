@@ -6,7 +6,7 @@ console.log(`
   </head>
   <body>
     <div id='main'>
-      <a href='./fake_external_link.html'>External Link</a>
+      <a data-keyboard-shortcut='e' href='./fake_external_link.html'>External Link</a>
       <a onclick='navigateTo(param => \`./fake_external_link.html?param=\${param}&more=true\`)'>External Link with Parameter</a>
       <a onclick='appleSauce()'>Child Page</a>
     </div>
@@ -26,6 +26,14 @@ console.log(`
           
         \`
       }
+
+      document.addEventListener('keyup', ({ key }) => {
+        console.error('keyup', key);
+        const anchor = document.querySelector(\`a[data-keyboard-shortcut='\${key}']\`);
+        if (anchor) {
+          anchor.click();
+        }
+      });
     </script>
   </body>
 </html>

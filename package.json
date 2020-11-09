@@ -1,6 +1,6 @@
 {
   "name": "where-away",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Generate a keyboard-navigable personal bookmark webpage from your bookmarks manifest. ",
   "bin": "src/cli.js",
   "main": "src/index.js",
