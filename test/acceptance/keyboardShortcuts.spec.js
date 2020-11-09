@@ -40,5 +40,12 @@ describe('handling keyboard shortcuts', () => {
     expect(page.url()).toEqual(`file://${fakeExternalLinkPath}?param=${arbitraryValue}&another=true&yes=please`);
   });
 
-  test.todo('can take you from a child page back to a parent page with the Escape key');
+  it('can take you from a child page back to a parent page with the Escape key', async () => {
+    const page = await sandbox.openHtmlOutput();
+    await keyup(page, linkData.child.key);
+    await keyup(page, 'Escape');
+    await keyup(page, linkData.external.key);
+    await waitForNavigation(page);
+    expect(page.url()).toEqual('file://' + fakeExternalLinkPath);
+  });
 });

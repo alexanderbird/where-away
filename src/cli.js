@@ -23,6 +23,11 @@ console.log(`
         render();
       }
 
+      function removeLeafNodeFromPath() {
+        path = path.slice(0, -1);
+        render();
+      }
+
       const manifest = {
         "": \`
           <a data-keyboard-shortcut='e' href='./fake_external_link.html'>External Link</a>
@@ -43,7 +48,11 @@ console.log(`
       }
 
       document.addEventListener('keyup', ({ key }) => {
-        console.error('keyup', key);
+        if (key === 'Escape') {
+          removeLeafNodeFromPath();
+          return;
+        }
+
         const anchor = document.querySelector(\`a[data-keyboard-shortcut='\${key}']\`);
         if (anchor) {
           anchor.click();
