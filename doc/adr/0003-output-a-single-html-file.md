@@ -6,6 +6,8 @@ Date: 2020-11-06
 
 Accepted
 
+Extended By [8. use pug to render the final html](0008-use-pug-to-render-the-final-html.md)
+
 ## Context
 
 ### Things we don't need

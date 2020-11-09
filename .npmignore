@@ -1,5 +1,6 @@
-doc
-test
 artifacts
+doc
+src
+test
 *.vim
 .github
