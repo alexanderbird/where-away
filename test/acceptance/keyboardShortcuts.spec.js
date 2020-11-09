@@ -1,5 +1,5 @@
 const { Sandbox } = require('./help/sandbox');
-const { keyup } = require('./help/dumpster');
+const { keyup, waitForNavigation } = require('./help/dumpster');
 const { fakeExternalLinkPath } = require('./help/context');
 
 describe('handling keyboard shortcuts', () => {
@@ -10,7 +10,7 @@ describe('handling keyboard shortcuts', () => {
   it('can take you to an external page', async () => {
     const page = await sandbox.openHtmlOutput();
     await keyup(page, 'e');
-    await page.waitForNavigation({ waitUntil: 'networkidle0' })
+    await waitForNavigation(page);
     expect(page.url()).toEqual('file://' + fakeExternalLinkPath);
   });
 

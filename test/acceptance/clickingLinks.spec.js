@@ -1,5 +1,5 @@
 const { Sandbox } = require('./help/sandbox');
-const { click } = require('./help/dumpster');
+const { click, waitForNavigation, fillInInput } = require('./help/dumpster');
 const { fakeExternalLinkPath } = require('./help/context');
 
 describe('clicking links', () => {
@@ -10,7 +10,7 @@ describe('clicking links', () => {
   it('can take you to an external page', async () => {
     const page = await sandbox.openHtmlOutput();
     await click(page, 'External Link');
-    await page.waitForNavigation({ waitUntil: 'networkidle0' })
+    await waitForNavigation(page);
     expect(page.url()).toEqual('file://' + fakeExternalLinkPath);
   });
 
@@ -18,10 +18,7 @@ describe('clicking links', () => {
     const page = await sandbox.openHtmlOutput();
     await click(page, 'External Link with Parameter');
     const arbitraryValue = 'FLArrbeN' + Math.random();
-    await page.$eval('input[type="text"]', (element, value) => {
-      element.value = value;
-      element.dispatchEvent(new Event('change'));
-    }, arbitraryValue);
+    await fillInInput(page, 'input[type="text"]', arbitraryValue);
     expect(page.url()).toEqual(`file://${fakeExternalLinkPath}?param=${arbitraryValue}&more=true`);
   });
 
@@ -29,7 +26,7 @@ describe('clicking links', () => {
     const page = await sandbox.openHtmlOutput();
     await click(page, 'Child Page');
     await click(page, 'Another External Link');
-    await page.waitForNavigation({ waitUntil: 'networkidle0' })
+    await waitForNavigation(page);
     expect(page.url()).toEqual('file://' + fakeExternalLinkPath + '?another=true');
   });
 
@@ -38,10 +35,7 @@ describe('clicking links', () => {
     await click(page, 'Child Page');
     await click(page, 'Another External Link with Parameter');
     const arbitraryValue = 'GLLlllitZZen' + Math.random();
-    await page.$eval('input[type="text"]', (element, value) => {
-      element.value = value;
-      element.dispatchEvent(new Event('change'));
-    }, arbitraryValue);
+    await fillInInput(page, 'input[type="text"]', arbitraryValue);
     expect(page.url()).toEqual(`file://${fakeExternalLinkPath}?param=${arbitraryValue}&another=true&yes=please`);
   });
 });
