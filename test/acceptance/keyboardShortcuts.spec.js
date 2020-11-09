@@ -1,5 +1,5 @@
 const { Sandbox } = require('./help/sandbox');
-const { keyup, waitForNavigation } = require('./help/dumpster');
+const { keyup, waitForNavigation, fillInInput } = require('./help/dumpster');
 const { fakeExternalLinkPath } = require('./help/context');
 
 describe('handling keyboard shortcuts', () => {
@@ -14,7 +14,14 @@ describe('handling keyboard shortcuts', () => {
     expect(page.url()).toEqual('file://' + fakeExternalLinkPath);
   });
 
-  test.todo('can take you to an external page after asking for a url parameter');
+  it('can take you to an external page after asking for a url parameter', async () => {
+    const page = await sandbox.openHtmlOutput();
+    await keyup(page, 'p');
+    const arbitraryValue = 'FLArrbeN' + Math.random();
+    await fillInInput(page, 'input[type="text"]', arbitraryValue);
+    expect(page.url()).toEqual(`file://${fakeExternalLinkPath}?param=${arbitraryValue}&more=true`);
+  });
+
   test.todo('can take you to a child page to show different links');
   test.todo('can take you from a child page back to a parent page with the Escape key');
 });
