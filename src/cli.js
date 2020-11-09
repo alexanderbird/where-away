@@ -8,7 +8,7 @@ console.log(`
     <div id='main'>
       <a data-keyboard-shortcut='e' href='./fake_external_link.html'>External Link</a>
       <a data-keyboard-shortcut='p' onclick='navigateTo(param => \`./fake_external_link.html?param=\${param}&more=true\`)'>External Link with Parameter</a>
-      <a onclick='appleSauce()'>Child Page</a>
+      <a data-keyboard-shortcut='c' onclick='appleSauce()'>Child Page</a>
     </div>
     <script>
       function navigateTo(linkFactory) {
@@ -20,7 +20,7 @@ console.log(`
       }
       function appleSauce() {
         document.querySelector('#main').innerHTML = \`
-          <a href='./fake_external_link.html?another=true'>Another External Link</a>
+          <a data-keyboard-shortcut='a' href='./fake_external_link.html?another=true'>Another External Link</a>
           <a onclick='navigateTo(param => \\\`./fake_external_link.html?param=\\\${param}&another=true&yes=please\\\`)'>
             Another External Link with Parameter
           </a>
