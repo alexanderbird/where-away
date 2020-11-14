@@ -1,4 +1,4 @@
-const { parse } = require('../../src/parse');
+const { parse } = require('../../src/cli/parse');
 
 describe('parse', () => {
   it('converts xml to object', () => {

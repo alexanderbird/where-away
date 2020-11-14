@@ -1,4 +1,4 @@
-const { transform } = require('../../src/transform');
+const { transform } = require('../../src/cli/transform');
 
 describe('transform', () => {
   it('produces an html string with anchor tags', () => {
