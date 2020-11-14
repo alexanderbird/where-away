@@ -1,6 +1,7 @@
-function navigateTo(linkFactory) {
+function navigateTo(anchor, linkFactory) {
   const input = document.createElement('input');
   input.type = 'text';
+  input.placeholder = anchor.dataset.parameterLabel;
   input.addEventListener('keyup', event => event.stopPropagation()); /* otherwise it'll trigger keyboard shortcuts */
   input.addEventListener('change', () => { window.location.href = linkFactory(input.value) });
   document.querySelector('#main').appendChild(input);

@@ -18,7 +18,7 @@ function chomp(path, addToResult, { key, href, label, children }) {
 
     if (parameterData) {
       const [_, left, parameterLabel, right] = parameterData;
-      const html = `<a data-keyboard-shortcut="${key}" onclick="navigateTo(param => \`${left}\${param}${right}\`)" data-parameter-label="${parameterLabel.trim()}">${label}</a>`;
+      const html = `<a data-keyboard-shortcut="${key}" onclick="navigateTo(this, param => \`${left}\${param}${right}\`)" data-parameter-label="${parameterLabel.trim()}">${label}</a>`;
       addToResult(path, html);
     } else {
       addToResult(path, `<a data-keyboard-shortcut="${key}" href="${href}">${label}</a>`);

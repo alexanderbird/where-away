@@ -10,7 +10,7 @@ describe('transform', () => {
   it('produces an anchor tag for group nodes', () => {
     const input = [{ href: 'https://foo.com/{{ Favourite Fruit or Appliance }}/search?where=here', key: 'f', label: 'Fruits and Appliances' }];
     const actual = transform(input);
-    expect(actual['']).toEqual('<a data-keyboard-shortcut="f" onclick="navigateTo(param => \`https://foo.com/${param}/search?where=here\`)" data-parameter-label="Favourite Fruit or Appliance">Fruits and Appliances</a>');
+    expect(actual['']).toEqual('<a data-keyboard-shortcut="f" onclick="navigateTo(this, param => \`https://foo.com/${param}/search?where=here\`)" data-parameter-label="Favourite Fruit or Appliance">Fruits and Appliances</a>');
   });
 
   it('produces an anchor tag for parameterized links', () => {
