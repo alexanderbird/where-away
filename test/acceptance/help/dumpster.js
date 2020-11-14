@@ -49,5 +49,8 @@ module.exports = {
       element.value = value;
       element.dispatchEvent(new Event('change'));
     }, value);
-  }
+  },
+
+  aMoment: duration => new Promise(r => setTimeout(r, duration)),
+
 };
