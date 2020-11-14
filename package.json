@@ -1,13 +1,12 @@
 {
   "name": "where-away",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Generate a keyboard-navigable personal bookmark webpage from your bookmarks manifest. ",
   "bin": "build/cli.js",
-  "main": "src/index.js",
-  "directories": {
-    "doc": "doc",
-    "test": "test"
-  },
+  "main": "build/cli.js",
+  "files": [
+    "build"
+  ],
   "scripts": {
     "build": "rm -rf build && node build.js",
     "test": "run-s test:unit test:acceptance:local",
