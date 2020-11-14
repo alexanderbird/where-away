@@ -4,7 +4,12 @@ function navigateTo(anchor, linkFactory) {
   input.placeholder = anchor.dataset.parameterLabel;
   input.addEventListener('keyup', event => event.stopPropagation()); /* otherwise it'll trigger keyboard shortcuts */
   input.addEventListener('change', () => { window.location.href = linkFactory(input.value) });
-  document.querySelector('#main').appendChild(input);
+
+  const modalWindow = document.createElement('div');
+  modalWindow.classList.add('modal-window');
+  modalWindow.appendChild(input);
+  document.querySelector('#main').appendChild(modalWindow);
+  setTimeout(() => input.focus(), 0);
 }
 
 let path = '';
