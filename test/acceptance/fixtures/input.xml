@@ -1,8 +1,8 @@
 <bookmarks>
   <link key="e" href="./fake_external_link.html" label="External Link"></link>
-  <link key="p" href="./fake_external_link.html?param={PARAM}&more=true" label="External Link"></link>
+  <link key="p" href="./fake_external_link.html?param={{ cat breed }}&more=true" label="External Link with Parameter"></link>
   <group key="c" label="Child Page">
-    <link key="a" href="./fake_external_link.html" label="Another External Link"></link>
-    <link key="p" href="./fake_external_link.html?param={PARAM}&another=true&yes=please" label="p Another External Link with Parameter"></link>
+    <link key="a" href="./fake_external_link.html?another=true" label="Another External Link"></link>
+    <link key="p" href="./fake_external_link.html?param={{ location }}&another=true&yes=please" label="Another External Link with Parameter"></link>
   </group> 
 </bookmarks>

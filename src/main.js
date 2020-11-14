@@ -18,23 +18,8 @@ function removeLeafNodeFromPath() {
   render();
 }
 
-const manifest = {
-  "": `
-    <a data-keyboard-shortcut='e' href='./fake_external_link.html'>External Link</a>
-    <a data-keyboard-shortcut='p' onclick='navigateTo(param => \`./fake_external_link.html?param=\${param}&more=true\`)'>External Link with Parameter</a>
-    <a data-keyboard-shortcut='c' onclick='addToPath(this)'>Child Page</a>
-  `,
-  "c": `
-    <a data-keyboard-shortcut='a' href='./fake_external_link.html?another=true'>Another External Link</a>
-    <a data-keyboard-shortcut='p' onclick='navigateTo(param => \`./fake_external_link.html?param=\${param}&another=true&yes=please\`)'>
-      Another External Link with Parameter
-    </a>
-    
-  `
-}
-
 function render() {
-  document.querySelector('#main').innerHTML = manifest[path];
+  document.querySelector('#main').innerHTML = bookmarks[path];
 }
 
 document.addEventListener('keyup', ({ key }) => {

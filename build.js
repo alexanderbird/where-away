@@ -9,4 +9,6 @@ module.exports = { template };
 
 fs.mkdirSync('./build', { recursive: true });
 fs.copyFileSync('src/cli.js', 'build/cli.js');
+fs.copyFileSync('src/parse.js', 'build/parse.js');
+fs.copyFileSync('src/transform.js', 'build/transform.js');
 fs.writeFileSync('build/template.js', template);
