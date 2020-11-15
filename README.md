@@ -43,6 +43,9 @@ Read more in the [related ADR](doc/adr/0002-name-the-project-where-away.md)
         file
       - then we use Jest in the test/acceptance/**/*.spec.js files to test the
         contents of that generated HTML file
+ - manual testing: you can run `npm run sandbox` to create a new sandbox,
+   process some sample input (from the acceptance test fixtures directory) and
+   open the rendered html file
 
 #### Notes on Acceptance Test suite
 

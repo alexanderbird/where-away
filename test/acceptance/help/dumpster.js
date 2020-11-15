@@ -28,7 +28,7 @@
 module.exports = {
   click: async function click(page, _text) {
     await page.evaluate(text => {
-      const link = Array.from(document.querySelectorAll('a')).find(a => a.textContent.trim() === text);
+      const link = Array.from(document.querySelectorAll('.bookmark')).find(bookmark => bookmark.textContent.trim() === text);
       link.click();
     }, _text);
   },
@@ -54,6 +54,6 @@ module.exports = {
   aMoment: duration => new Promise(r => setTimeout(r, duration)),
 
   getLinkTexts: async function getLinkTexts(page) {
-    return await page.evaluate(() => Array.from(document.querySelectorAll('a')).map(a => a.textContent.trim()));
+    return await page.evaluate(() => Array.from(document.querySelectorAll('.bookmark')).map(bookmark => bookmark.textContent.trim()));
   }
 };

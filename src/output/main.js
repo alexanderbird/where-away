@@ -41,7 +41,7 @@ document.addEventListener('keyup', ({ key }) => {
     return;
   }
 
-  const anchor = document.querySelector(`a[data-keyboard-shortcut='${key}']`);
+  const anchor = document.querySelector(`.bookmark[data-keyboard-shortcut='${key}']`);
   if (anchor) {
     anchor.click();
   }

@@ -1,6 +1,6 @@
 {
   "name": "where-away",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Generate a keyboard-navigable personal bookmark webpage from your bookmarks manifest. ",
   "bin": "build/cli.js",
   "main": "build/cli.js",
@@ -13,7 +13,8 @@
     "test:unit": "JEST_JUNIT_OUTPUT_NAME=junit.unit.xml jest --testPathPattern=test/unit",
     "test:acceptance:local": "npm run build && JEST_JUNIT_OUTPUT_NAME=junit.acceptance.local.xml && npm run _test:acceptance",
     "test:acceptance:production": "JEST_JUNIT_OUTPUT_NAME=junit.acceptance.production.xml SANDBOX_ENVIRONMENT=PRODUCTION npm run _test:acceptance",
-    "_test:acceptance": "RESULT_FILE=result.html TEST_SANDBOX=${TEST_SANDBOX:-$(RESULT_FILE=result.html test/acceptance/help/create_sandbox.sh)} jest --testPathPattern=test/acceptance"
+    "_test:acceptance": "RESULT_FILE=result.html TEST_SANDBOX=${TEST_SANDBOX:-$(RESULT_FILE=result.html test/acceptance/help/create_sandbox.sh)} jest --testPathPattern=test/acceptance",
+    "sandbox": "npm run build && open $(RESULT_FILE=result.html test/acceptance/help/create_sandbox.sh)/result.html"
   },
   "repository": {
     "type": "git",

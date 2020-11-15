@@ -1,20 +1,35 @@
+/* resets
+ *********/
+button {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+/* application
+ **************/
+
 #main {
   display: flex;
   flex-direction: column;
 }
 
-#main a {
+#main .bookmark {
   border-radius: 5px;
   background-color: aliceblue;
   margin: 5px;
   padding: 10px;
+  text-align: center;
 }
 
-#main a:hover {
+#main .bookmark:hover {
   background-color: lightblue;
 }
 
-#main input[type="text"] {
+#main .bookmark-parameter {
   text-align: center;
   margin: auto;
 }

@@ -9,10 +9,10 @@ describe('transform', () => {
     const actual = transform(input);
     expect(summarizeHTML(actual[''])).toEqual([expect.objectContaining({
       nodeName: 'a',
-      attributes: {
+      attributes: expect.objectContaining({
         href: 'https://foo.com',
         'data-keyboard-shortcut': 'a'
-      },
+      }),
       textContent: 'First Link'
     })]);
   });
@@ -22,12 +22,13 @@ describe('transform', () => {
     const actual = transform(input);
     expect(summarizeHTML(actual['x'])).toEqual([expect.objectContaining({
       nodeName: 'input',
-      attributes: {
+      attributes: expect.objectContaining({
         type: 'text',
+        class: 'bookmark-parameter',
         placeholder: 'Favourite Fruit or Appliance',
         onkeyup: 'e => e.stopPropagation()',
         'data-on-change-navigate-to': 'https://foo.com/{{VALUE}}/search?where=here',
-      },
+      }),
       textContent: ''
     })]);
   });
@@ -36,11 +37,11 @@ describe('transform', () => {
     const input = [{ href: 'https://foo.com/{{ Favourite Fruit or Appliance }}/search?where=here', key: 'x', label: 'Fruits and Appliances' }];
     const actual = transform(input);
     expect(summarizeHTML(actual[''])).toEqual([expect.objectContaining({
-      nodeName: 'a',
-      attributes: {
+      nodeName: 'button',
+      attributes: expect.objectContaining({
         onclick: 'addToPath(this)',
         'data-keyboard-shortcut': 'x'
-      },
+      }),
       textContent: 'Fruits and Appliances'
     })]);
   });
@@ -49,11 +50,11 @@ describe('transform', () => {
     const input = [{ children: [], key: 'y', label: 'A Group of Bookmarks' }];
     const actual = transform(input);
     expect(summarizeHTML(actual[''])).toEqual([expect.objectContaining({
-      nodeName: 'a',
-      attributes: {
+      nodeName: 'button',
+      attributes: expect.objectContaining({
         onclick: 'addToPath(this)',
         'data-keyboard-shortcut': 'y'
-      },
+      }),
       textContent: 'A Group of Bookmarks'
     })]);
   });
@@ -70,6 +71,26 @@ describe('transform', () => {
       expect.objectContaining({ nodeName: 'a', textContent: 'BARBAR' }),
       expect.objectContaining({ nodeName: 'a', textContent: 'le bazzoo' }),
     ]);
+  });
+
+  describe('identifying anchors and buttons through CSS', () => {
+    [
+      {
+        testCase: 'link',
+        input: { href: 'go.there', key: 'a', label: 'anchor' }
+      },
+      {
+        testCase: 'parameterized link parent',
+        input: { href: 'go.{{ somewhere }}', key: 'a', label: 'anchor' }
+      },
+      {
+        testCase: 'group',
+        input: { children: [], key: 'a', label: 'anchor' }
+      }
+    ].forEach(({ testCase, input }) => it(`adds the 'bookmark' class to ${testCase} nodes`, () => {
+      const actual = transform([input]);
+      expect(summarizeHTML(actual[''])[0].attributes.class).toEqual('bookmark');
+    }));
   });
 
   describe('nested links', () => {
@@ -97,10 +118,10 @@ describe('transform', () => {
 
       expect(summarizeHTML(actual['1ym'])).toEqual([expect.objectContaining({
         nodeName: 'a',
-        attributes: {
+        attributes: expect.objectContaining({
           href: 'https://cool.io',
           'data-keyboard-shortcut': 'q'
-        },
+        }),
         textContent: 'Link 1'
       })]);
     });
@@ -152,7 +173,6 @@ describe('transform', () => {
       .map(node => ({
         nodeName: node.nodeName.toLowerCase(),
         textContent: node.textContent,
-        class: node.classList.toString(),
         innerHTML: node.innerHTML,
         attributes: Array.from(node.attributes)
           .map(({ nodeName: key, nodeValue: value }) => ({ key, value }))
