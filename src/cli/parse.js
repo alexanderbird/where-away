@@ -13,7 +13,8 @@ function isValidNode(node) {
 }
 
 function objectify(stuff) {
-  const { href, key, label } = getAttributes(stuff.attributes);
+  const { href, key: rawKey, label } = getAttributes(stuff.attributes);
+  const key = rawKey.toLowerCase();
   if (stuff.nodeName === 'link') {
     return { href, key, label }
   }

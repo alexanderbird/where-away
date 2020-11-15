@@ -30,4 +30,18 @@ describe('parse', () => {
     ];
     expect(parse(xml)).toEqual(expected);
   });
+
+  it('lowercases the key', () => {
+    const xml = `
+      <bookmarks>
+        <link key="Q" href="foo" label="First Link"></link>
+      </bookmarks>
+    `;
+    const expected = [{
+      "href": "foo",
+      "key": "q",
+      "label": "First Link"
+    }];
+    expect(parse(xml)).toEqual(expected);
+  });
 });
