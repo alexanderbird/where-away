@@ -1,5 +1,5 @@
 const { Sandbox } = require('./help/sandbox');
-const { click, waitForNavigation, fillInInput } = require('./help/dumpster');
+const { click, fillInInput } = require('./help/dumpster');
 const { fakeExternalLinkPath } = require('./help/context');
 const { linkData } = require('./help/fixtures');
 
@@ -11,7 +11,7 @@ describe('clicking links', () => {
   it('can take you to an external page', async () => {
     const page = await sandbox.openHtmlOutput();
     await click(page, linkData.external.label);
-    await waitForNavigation(page);
+    await page.waitForSelector('#external-link-page');
     expect(page.url()).toEqual('file://' + fakeExternalLinkPath);
   });
 
@@ -27,7 +27,7 @@ describe('clicking links', () => {
     const page = await sandbox.openHtmlOutput();
     await click(page, linkData.child.label);
     await click(page, linkData.child.external.label);
-    await waitForNavigation(page);
+    await page.waitForSelector('#external-link-page');
     expect(page.url()).toEqual('file://' + fakeExternalLinkPath + '?another=true');
   });
 

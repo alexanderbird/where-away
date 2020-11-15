@@ -40,9 +40,6 @@ module.exports = {
     }, _key);
   },
 
-  waitForNavigation: async function waitForNavigation(page) {
-    await new Promise(r => setTimeout(r, 100));
-  },
 
   fillInInput: async function fillInInput(page, selector, value) {
     await page.$eval(selector, (element, value) => {

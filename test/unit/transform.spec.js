@@ -8,9 +8,9 @@ describe('transform', () => {
     const input = [{ href: 'https://foo.com', key: 'a', label: 'First Link' }];
     const actual = transform(input);
     expect(summarizeHTML(actual[''])).toEqual([expect.objectContaining({
-      nodeName: 'a',
+      nodeName: 'button',
       attributes: expect.objectContaining({
-        href: 'https://foo.com',
+        onclick: 'window.location.href = "https://foo.com"',
         'data-keyboard-shortcut': 'a'
       }),
       textContent: 'First Link'
@@ -59,7 +59,7 @@ describe('transform', () => {
     })]);
   });
 
-  it('produces an anchor tag for each root link', () => {
+  it('produces a button tag for each root link', () => {
     const input = [
       { href: 'https://foo.com', key: 'l', label: 'The Foo' },
       { href: 'https://bar.com', key: 'm', label: 'BARBAR' },
@@ -67,9 +67,9 @@ describe('transform', () => {
     ];
     const actual = transform(input);
     expect(summarizeHTML(actual[''])).toEqual([
-      expect.objectContaining({ nodeName: 'a', textContent: 'The Foo' }),
-      expect.objectContaining({ nodeName: 'a', textContent: 'BARBAR' }),
-      expect.objectContaining({ nodeName: 'a', textContent: 'le bazzoo' }),
+      expect.objectContaining({ nodeName: 'button', textContent: 'The Foo' }),
+      expect.objectContaining({ nodeName: 'button', textContent: 'BARBAR' }),
+      expect.objectContaining({ nodeName: 'button', textContent: 'le bazzoo' }),
     ]);
   });
 
@@ -117,9 +117,9 @@ describe('transform', () => {
       const actual = transform(input);
 
       expect(summarizeHTML(actual['1ym'])).toEqual([expect.objectContaining({
-        nodeName: 'a',
+        nodeName: 'button',
         attributes: expect.objectContaining({
-          href: 'https://cool.io',
+          onclick: 'window.location.href = "https://cool.io"',
           'data-keyboard-shortcut': 'q'
         }),
         textContent: 'Link 1'

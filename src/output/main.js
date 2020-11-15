@@ -13,17 +13,17 @@ function removeLeafNodeFromPath() {
 function render() {
   const container = document.querySelector('#main');
   container.innerHTML = bookmarks[path];
-  focusTextInput(container);
   attachUnobtrusiveJavascript(container);
+  chooseCorrectFocus(container);
 }
 
-function focusTextInput(container) {
-  setTimeout(() => {
-    const textInput = document.querySelector('input[type="text"]');
-    if (textInput) {
-      textInput.focus()
-    }
-  }, 0);
+function chooseCorrectFocus(container) {
+  const textInput = container.querySelector('input[type="text"]');
+  if (textInput) {
+    textInput.focus()
+  } else {
+    document.querySelector('#tab-index-reset').focus();
+  }
 }
 
 function attachUnobtrusiveJavascript(container) {

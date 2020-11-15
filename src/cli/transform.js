@@ -29,7 +29,7 @@ function chomp(path, addToResult, { key, href, label, children }) {
       addToResult(path, parentHtml);
       addToResult(path + key, childHtml);
     } else {
-      addToResult(path, `<a class='bookmark' data-keyboard-shortcut="${key}" href="${href}">${emphasizedLabel}</a>`);
+      addToResult(path, `<button class='bookmark' data-keyboard-shortcut="${key}" onclick='window.location.href = "${href}"'>${emphasizedLabel}</button>`);
     }
   }
 }

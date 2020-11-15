@@ -12,6 +12,14 @@ button {
 /* application
  **************/
 
+#tab-index-reset {
+  margin: 0;
+  padding: 0;
+  width: 0;
+  height: 0;
+  position: fixed;
+}
+
 #main {
   display: flex;
   flex-direction: column;
