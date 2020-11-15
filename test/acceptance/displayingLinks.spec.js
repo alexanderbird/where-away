@@ -1,5 +1,5 @@
 const { Sandbox } = require('./help/sandbox');
-const { click, keyup } = require('./help/dumpster');
+const { click, keyup, getLinkTexts } = require('./help/dumpster');
 const { linkData } = require('./help/fixtures');
 
 describe('displaying links', () => {
@@ -38,8 +38,4 @@ describe('displaying links', () => {
       'Child Page'
     ]);
   });
-
-  async function getLinkTexts(page) {
-    return await page.evaluate(() => Array.from(document.querySelectorAll('a')).map(a => a.textContent.trim()));
-  }
 });

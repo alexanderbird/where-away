@@ -1,5 +1,5 @@
 const { Sandbox } = require('./help/sandbox');
-const { click, aMoment } = require('./help/dumpster');
+const { click, aMoment, keyup, getLinkTexts } = require('./help/dumpster');
 const { fakeExternalLinkPath } = require('./help/context');
 const { linkData } = require('./help/fixtures');
 
@@ -11,11 +11,21 @@ describe('entering url parameters', () => {
   it('shows you the placeholder from your bookmarks file', async () => {
     const page = await sandbox.openHtmlOutput();
     await click(page, linkData.parameter.label);
-    const inputPlaceholder = await page.evaluate(() => document.querySelector('.modal-window input[type="text"]').getAttribute('placeholder'));
+    const inputPlaceholder = await page.evaluate(() => document.querySelector('input[type="text"]').getAttribute('placeholder'));
     expect(inputPlaceholder).toEqual('cat breed');
   });
 
-  test.todo('closes the modal when you press escape');
+  it('returns to the previous list when you press escape', async () => {
+    const page = await sandbox.openHtmlOutput();
+    await click(page, linkData.parameter.label);
+    await keyup(page, 'Escape');
+    const linkTexts = await getLinkTexts(page);
+    expect(linkTexts).toEqual([
+      'External Link',
+      'External Link with Parameter',
+      'Child Page'
+    ]);
+  });
 
   it('auto-focusses the input', async () => {
     const page = await sandbox.openHtmlOutput();

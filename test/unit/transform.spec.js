@@ -7,13 +7,23 @@ describe('transform', () => {
     expect(actual['']).toEqual('<a data-keyboard-shortcut="a" href="https://foo.com">First Link</a>');
   });
 
-  it('produces an anchor tag for group nodes', () => {
+  it('produces an anchor tag for parameterized links', () => {
     const input = [{ href: 'https://foo.com/{{ Favourite Fruit or Appliance }}/search?where=here', key: 'f', label: 'Fruits and Appliances' }];
     const actual = transform(input);
-    expect(actual['']).toEqual('<a data-keyboard-shortcut="f" onclick="navigateTo(this, param => \`https://foo.com/${param}/search?where=here\`)" data-parameter-label="Favourite Fruit or Appliance">Fruits and Appliances</a>');
+    expect(actual['f']).toEqual('<input type="text" '
+      + 'placeholder="Favourite Fruit or Appliance" '
+      + 'onkeyup="e => e.stopPropagation()" '
+      + 'data-on-change-navigate-to="https://foo.com/{{VALUE}}/search?where=here" '
+      + '></input>');
   });
 
-  it('produces an anchor tag for parameterized links', () => {
+  it('produces a parent tag for parameterized links', () => {
+    const input = [{ href: 'https://foo.com/{{ Favourite Fruit or Appliance }}/search?where=here', key: 'f', label: 'Fruits and Appliances' }];
+    const actual = transform(input);
+    expect(actual['']).toEqual('<a data-keyboard-shortcut="f" onclick="addToPath(this)">Fruits and Appliances</a>');
+  });
+
+  it('produces an anchor tag for group nodes', () => {
     const input = [{ children: [], key: 'g', label: 'A Group of Bookmarks' }];
     const actual = transform(input);
     expect(actual['']).toEqual('<a data-keyboard-shortcut="g" onclick="addToPath(this)">A Group of Bookmarks</a>');

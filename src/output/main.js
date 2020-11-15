@@ -1,17 +1,3 @@
-function navigateTo(anchor, linkFactory) {
-  const input = document.createElement('input');
-  input.type = 'text';
-  input.placeholder = anchor.dataset.parameterLabel;
-  input.addEventListener('keyup', event => event.stopPropagation()); /* otherwise it'll trigger keyboard shortcuts */
-  input.addEventListener('change', () => { window.location.href = linkFactory(input.value) });
-
-  const modalWindow = document.createElement('div');
-  modalWindow.classList.add('modal-window');
-  modalWindow.appendChild(input);
-  document.querySelector('#main').appendChild(modalWindow);
-  setTimeout(() => input.focus(), 0);
-}
-
 let path = '';
 function addToPath(anchor) {
   const character = anchor.dataset.keyboardShortcut;
@@ -25,7 +11,28 @@ function removeLeafNodeFromPath() {
 }
 
 function render() {
-  document.querySelector('#main').innerHTML = bookmarks[path];
+  const container = document.querySelector('#main');
+  container.innerHTML = bookmarks[path];
+  focusTextInput(container);
+  attachUnobtrusiveJavascript(container);
+}
+
+function focusTextInput(container) {
+  setTimeout(() => {
+    const textInput = document.querySelector('input[type="text"]');
+    if (textInput) {
+      textInput.focus()
+    }
+  }, 0);
+}
+
+function attachUnobtrusiveJavascript(container) {
+  Array.from(container.querySelectorAll('[data-on-change-navigate-to]')).forEach(element => {
+    function navigate() {
+      window.location.href = element.dataset.onChangeNavigateTo.replace('{{VALUE}}', element.value);
+    }
+    element.addEventListener('change', navigate)
+  });
 }
 
 document.addEventListener('keyup', ({ key }) => {

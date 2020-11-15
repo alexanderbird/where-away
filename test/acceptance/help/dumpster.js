@@ -53,4 +53,7 @@ module.exports = {
 
   aMoment: duration => new Promise(r => setTimeout(r, duration)),
 
+  getLinkTexts: async function getLinkTexts(page) {
+    return await page.evaluate(() => Array.from(document.querySelectorAll('a')).map(a => a.textContent.trim()));
+  }
 };
