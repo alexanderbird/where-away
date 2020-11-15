@@ -24,9 +24,14 @@ jobs:
       - uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.NPM_TOKEN }}
-      - run: npm run test:acceptance:production
+      - uses: nick-invision/retry@v2
         env:
           INPUT_TOKEN: ''
+        with:
+          timeout_seconds: 30
+          max_attempts: 2
+          retry_on: error
+          command: npm run test:acceptance:production
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
