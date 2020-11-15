@@ -7,29 +7,55 @@ describe('transform', () => {
   it('produces an html string with anchor tags', () => {
     const input = [{ href: 'https://foo.com', key: 'a', label: 'First Link' }];
     const actual = transform(input);
-    expect(actual['']).toEqual('<a data-keyboard-shortcut="a" href="https://foo.com">First Link</a>');
+    expect(summarizeHTML(actual[''])).toEqual([{
+      nodeName: 'a',
+      attributes: {
+        href: 'https://foo.com',
+        'data-keyboard-shortcut': 'a'
+      },
+      textContent: 'First Link'
+    }]);
   });
 
   it('produces an anchor tag for parameterized links', () => {
     const input = [{ href: 'https://foo.com/{{ Favourite Fruit or Appliance }}/search?where=here', key: 'x', label: 'Fruits and Appliances' }];
     const actual = transform(input);
-    expect(actual['x']).toEqual('<input type="text" '
-      + 'placeholder="Favourite Fruit or Appliance" '
-      + 'onkeyup="e => e.stopPropagation()" '
-      + 'data-on-change-navigate-to="https://foo.com/{{VALUE}}/search?where=here" '
-      + '></input>');
+    expect(summarizeHTML(actual['x'])).toEqual([{
+      nodeName: 'input',
+      attributes: {
+        type: 'text',
+        placeholder: 'Favourite Fruit or Appliance',
+        onkeyup: 'e => e.stopPropagation()',
+        'data-on-change-navigate-to': 'https://foo.com/{{VALUE}}/search?where=here',
+      },
+      textContent: ''
+    }]);
   });
 
   it('produces a parent tag for parameterized links', () => {
     const input = [{ href: 'https://foo.com/{{ Favourite Fruit or Appliance }}/search?where=here', key: 'x', label: 'Fruits and Appliances' }];
     const actual = transform(input);
-    expect(actual['']).toEqual('<a data-keyboard-shortcut="x" onclick="addToPath(this)">Fruits and Appliances</a>');
+    expect(summarizeHTML(actual[''])).toEqual([{
+      nodeName: 'a',
+      attributes: {
+        onclick: 'addToPath(this)',
+        'data-keyboard-shortcut': 'x'
+      },
+      textContent: 'Fruits and Appliances'
+    }]);
   });
 
   it('produces an anchor tag for group nodes', () => {
     const input = [{ children: [], key: 'y', label: 'A Group of Bookmarks' }];
     const actual = transform(input);
-    expect(actual['']).toEqual('<a data-keyboard-shortcut="y" onclick="addToPath(this)">A Group of Bookmarks</a>');
+    expect(summarizeHTML(actual[''])).toEqual([{
+      nodeName: 'a',
+      attributes: {
+        onclick: 'addToPath(this)',
+        'data-keyboard-shortcut': 'y'
+      },
+      textContent: 'A Group of Bookmarks'
+    }]);
   });
 
   it('produces an anchor tag for each root link', () => {
@@ -39,11 +65,11 @@ describe('transform', () => {
       { href: 'https://baz.com', key: 'n', label: 'le bazzoo' }
     ];
     const actual = transform(input);
-    expect(actual['']).toEqual(
-        '<a data-keyboard-shortcut="l" href="https://foo.com">The Foo</a>'
-      + '<a data-keyboard-shortcut="m" href="https://bar.com">BARBAR</a>'
-      + '<a data-keyboard-shortcut="n" href="https://baz.com">le bazzoo</a>'
-    );
+    expect(summarizeHTML(actual[''])).toEqual([
+      expect.objectContaining({ nodeName: 'a', textContent: 'The Foo' }),
+      expect.objectContaining({ nodeName: 'a', textContent: 'BARBAR' }),
+      expect.objectContaining({ nodeName: 'a', textContent: 'le bazzoo' }),
+    ]);
   });
 
   describe('nested links', () => {
@@ -63,13 +89,20 @@ describe('transform', () => {
     it('produces objects keys for each unique path', () => {
       const actual = transform(input);
 
-      expect(Object.keys(actual).sort()).toEqual(['', '1', '1y', '1ym', '1z'])
+      expect(Object.keys(actual).sort()).toEqual(['', '1', '1y', '1ym', '1z']);
     });
 
     it('produces the right html for nested paths', () => {
       const actual = transform(input);
 
-      expect(actual['1ym']).toEqual('<a data-keyboard-shortcut="q" href="https://cool.io">Link 1</a>');
+      expect(summarizeHTML(actual['1ym'])).toEqual([{
+        nodeName: 'a',
+        attributes: {
+          href: 'https://cool.io',
+          'data-keyboard-shortcut': 'q'
+        },
+        textContent: 'Link 1'
+      }]);
     });
   });
 
@@ -113,4 +146,16 @@ describe('transform', () => {
       });
     });
   });
+
+  function summarizeHTML(html) {
+    const body = new JSDOM(html).window.document.body;
+    return Array.from(body.childNodes)
+      .map(node => ({
+        nodeName: node.nodeName.toLowerCase(),
+        textContent: node.textContent,
+        attributes: Array.from(node.attributes)
+          .map(({ nodeName: key, nodeValue: value }) => ({ key, value }))
+          .reduce((all, one) => { all[one.key] = one.value; return all }, {})
+      }));
+  }
 });
