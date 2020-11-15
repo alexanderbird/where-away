@@ -7,20 +7,20 @@ describe('transform', () => {
   it('produces an html string with anchor tags', () => {
     const input = [{ href: 'https://foo.com', key: 'a', label: 'First Link' }];
     const actual = transform(input);
-    expect(summarizeHTML(actual[''])).toEqual([{
+    expect(summarizeHTML(actual[''])).toEqual([expect.objectContaining({
       nodeName: 'a',
       attributes: {
         href: 'https://foo.com',
         'data-keyboard-shortcut': 'a'
       },
       textContent: 'First Link'
-    }]);
+    })]);
   });
 
   it('produces an anchor tag for parameterized links', () => {
     const input = [{ href: 'https://foo.com/{{ Favourite Fruit or Appliance }}/search?where=here', key: 'x', label: 'Fruits and Appliances' }];
     const actual = transform(input);
-    expect(summarizeHTML(actual['x'])).toEqual([{
+    expect(summarizeHTML(actual['x'])).toEqual([expect.objectContaining({
       nodeName: 'input',
       attributes: {
         type: 'text',
@@ -29,33 +29,33 @@ describe('transform', () => {
         'data-on-change-navigate-to': 'https://foo.com/{{VALUE}}/search?where=here',
       },
       textContent: ''
-    }]);
+    })]);
   });
 
   it('produces a parent tag for parameterized links', () => {
     const input = [{ href: 'https://foo.com/{{ Favourite Fruit or Appliance }}/search?where=here', key: 'x', label: 'Fruits and Appliances' }];
     const actual = transform(input);
-    expect(summarizeHTML(actual[''])).toEqual([{
+    expect(summarizeHTML(actual[''])).toEqual([expect.objectContaining({
       nodeName: 'a',
       attributes: {
         onclick: 'addToPath(this)',
         'data-keyboard-shortcut': 'x'
       },
       textContent: 'Fruits and Appliances'
-    }]);
+    })]);
   });
 
   it('produces an anchor tag for group nodes', () => {
     const input = [{ children: [], key: 'y', label: 'A Group of Bookmarks' }];
     const actual = transform(input);
-    expect(summarizeHTML(actual[''])).toEqual([{
+    expect(summarizeHTML(actual[''])).toEqual([expect.objectContaining({
       nodeName: 'a',
       attributes: {
         onclick: 'addToPath(this)',
         'data-keyboard-shortcut': 'y'
       },
       textContent: 'A Group of Bookmarks'
-    }]);
+    })]);
   });
 
   it('produces an anchor tag for each root link', () => {
@@ -95,14 +95,14 @@ describe('transform', () => {
     it('produces the right html for nested paths', () => {
       const actual = transform(input);
 
-      expect(summarizeHTML(actual['1ym'])).toEqual([{
+      expect(summarizeHTML(actual['1ym'])).toEqual([expect.objectContaining({
         nodeName: 'a',
         attributes: {
           href: 'https://cool.io',
           'data-keyboard-shortcut': 'q'
         },
         textContent: 'Link 1'
-      }]);
+      })]);
     });
   });
 
@@ -141,8 +141,7 @@ describe('transform', () => {
     ].forEach(({ testCase, input, expected }) => {
       it(`emphasizes the first occurrence of the key for ${testCase}`, () => {
         const actual = transform(input);
-        const actualDom = new JSDOM(actual['']).window.document.body.firstChild;
-        expect(actualDom.innerHTML).toEqual(expected);
+        expect(summarizeHTML(actual[''])[0].innerHTML).toEqual(expected);
       });
     });
   });
@@ -153,6 +152,8 @@ describe('transform', () => {
       .map(node => ({
         nodeName: node.nodeName.toLowerCase(),
         textContent: node.textContent,
+        class: node.classList.toString(),
+        innerHTML: node.innerHTML,
         attributes: Array.from(node.attributes)
           .map(({ nodeName: key, nodeValue: value }) => ({ key, value }))
           .reduce((all, one) => { all[one.key] = one.value; return all }, {})
