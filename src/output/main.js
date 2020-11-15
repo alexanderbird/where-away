@@ -36,14 +36,25 @@ function attachUnobtrusiveJavascript(container) {
 }
 
 document.addEventListener('keyup', ({ key }) => {
+  Array.from(document.querySelectorAll('.keydown'))
+    .forEach(e => e.classList.remove('keydown'));
+
   if (key === 'Escape') {
     removeLeafNodeFromPath();
     return;
   }
 
-  const anchor = document.querySelector(`.bookmark[data-keyboard-shortcut='${key}']`);
-  if (anchor) {
-    anchor.click();
+  const bookmark = document.querySelector(`.bookmark[data-keyboard-shortcut='${key}']`);
+  if (bookmark) {
+    bookmark.click();
+  }
+});
+
+document.addEventListener('keydown', ({ key }) => {
+  const bookmark = document.querySelector(`.bookmark[data-keyboard-shortcut='${key}']`);
+  if (bookmark) {
+    bookmark.focus();
+    bookmark.classList.add('keydown');
   }
 });
 

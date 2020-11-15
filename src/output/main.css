@@ -37,6 +37,45 @@ button {
   background-color: lightblue;
 }
 
+#main .bookmark strong {
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+}
+
+#main .bookmark strong:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  background: #FF04;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  top: 50%;
+  height: 1em;
+  width: 1em;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+#main .bookmark.keydown strong:after {
+  animation-name: grow;
+  animation-duration: 30s;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(0.085, 0.885, 0.275, 0.930);
+}
+
+
+@keyframes grow {
+  from {
+   height: 1em;
+   width: 1em;
+  }
+  to {
+   height: 20em;
+   width: 20em;
+  }
+}
+
 #main .bookmark-parameter {
   text-align: center;
   margin: auto;

@@ -40,6 +40,12 @@ module.exports = {
     }, _key);
   },
 
+  keydown: async function keydown(page, _key) {
+    await page.evaluate(key => {
+      const event = new KeyboardEvent('keydown', { key });
+      document.dispatchEvent(event);
+    }, _key);
+  },
 
   fillInInput: async function fillInInput(page, selector, value) {
     await page.$eval(selector, (element, value) => {
