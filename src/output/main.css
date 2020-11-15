@@ -37,17 +37,25 @@ button {
   background-color: lightblue;
 }
 
+#main .bookmark {
+  z-index: 1;
+}
+
+#main .bookmark:focus {
+  z-index: 2;
+}
+
 #main .bookmark strong {
   position: relative;
   display: inline-block;
-  z-index: 1;
+  z-index: -1;
 }
 
 #main .bookmark strong:after {
   content: '';
   position: absolute;
   width: 100%;
-  background: #FF04;
+  background: #FFA;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   top: 50%;
@@ -64,15 +72,14 @@ button {
   animation-timing-function: cubic-bezier(0.085, 0.885, 0.275, 0.930);
 }
 
-
 @keyframes grow {
   from {
    height: 1em;
    width: 1em;
   }
   to {
-   height: 20em;
-   width: 20em;
+   height: 200vw;
+   width: 200vw;
   }
 }
 
