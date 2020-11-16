@@ -38,7 +38,11 @@ jobs:
           name: test-results
           path: artifacts
       - name: Deploy demo site with Netlify
-        run: curl -X POST -d {} https://api.netlify.com/build_hooks/5fb218abe07ac73e52a803a7
+        run: .github_workflow_scripts/release_netlify_build.sh
+        env:
+          NETLIFY_API: https://api.netlify.com/api/v1
+          USER_AGENT: "User-Agent: where-away (alex@alexanderbird.software)"
+          SITE_ID: 3f24de7f-67aa-4db0-b1a3-ec2e79195ff8
 
   publish-test-results:
     name: "Publish Test Results"
