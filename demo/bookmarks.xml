@@ -1,3 +1,6 @@
 <bookmarks>
   <link key="g" href="https://google.com" label="Google"></link>
+  <group key="c" label="Comics">
+    <link key="x" href="https://xkcd.com/" label="XKCD"></link>
+  </group>
 </bookmarks>
