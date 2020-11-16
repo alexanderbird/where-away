@@ -67,6 +67,7 @@ body {
 }
 
 #main .bookmark strong {
+  text-decoration: underline;
   position: relative;
   display: inline-block;
   z-index: -1;
