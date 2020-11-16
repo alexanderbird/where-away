@@ -4,7 +4,6 @@
   "description": "Demo for Where Away?",
   "main": "build/index.html",
   "scripts": {
-    "preinstall": "cd .. && npm run build",
     "build": "npm run build:clean && npm run build:where-away",
     "build:clean": "rm -rf build && mkdir build",
     "build:where-away": "where-away --title 'where-away Demo' --header-html \"$(cat header.html)\" --footer-html \"$(cat footer.html)\" < bookmarks.xml > build/index.html"
@@ -12,6 +11,6 @@
   "author": "",
   "license": "SEE LICENSE IN ../LICENSE",
   "devDependencies": {
-    "where-away": "file:.."
+    "where-away": "0.3.0"
   }
 }
