@@ -12,6 +12,19 @@ button {
 /* application
  **************/
 
+body {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    'header'
+    'main'
+    'footer';
+  text-align: center;
+  margin: 0;
+  padding: 10px;
+  min-height: calc(100vh - 20px);
+}
+
 #tab-index-reset {
   margin: 0;
   padding: 0;
@@ -20,9 +33,17 @@ button {
   position: fixed;
 }
 
+#header {
+  grid-area: header;
+}
+
 #main {
   display: flex;
   flex-direction: column;
+}
+
+#footer {
+  grid-area: footer;
 }
 
 #main .bookmark {
@@ -59,8 +80,8 @@ button {
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   top: 50%;
-  height: 1em;
-  width: 1em;
+  height: 1.6em;
+  width: 1.6em;
   border-radius: 50%;
   z-index: -1;
 }
@@ -74,8 +95,8 @@ button {
 
 @keyframes grow {
   from {
-   height: 1em;
-   width: 1em;
+   height: 1.6em;
+   width: 1.6em;
   }
   to {
    height: 200vw;

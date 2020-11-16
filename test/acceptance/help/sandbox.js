@@ -3,7 +3,8 @@ const puppeteer = require('puppeteer');
 const { htmlOutputPath } = require('./context');
 
 class Sandbox {
-  constructor() {
+  constructor(path = htmlOutputPath) {
+    this.path = path;
     this.browser = puppeteer.launch()
   }
 
@@ -17,7 +18,7 @@ class Sandbox {
     page.on('error',     error => console.error('Puppeteer page error:', error));
     page.on('pageerror', error => console.error('Puppeteer page error:', error));
     page.on('console', message => console[message.type()]('Puppeteer console message', message.text()));
-    await page.goto(`file://${htmlOutputPath}`);
+    await page.goto(`file://${this.path}`);
     return page;
   }
 

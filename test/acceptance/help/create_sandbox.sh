@@ -42,4 +42,4 @@ jq -r '"    version: " + .version' < node_modules/where-away/package.json 1>&2
 log ②   executing where-away to generate an HTML file
 set -x
 echo "<div id='external-link-page'>placeholder</div>" > fake_external_link.html
-npx --no-install where-away > $RESULT_FILE < $where_away_path/test/acceptance/fixtures/input.xml
+npx --no-install where-away > $RESULT_FILE < $where_away_path/test/acceptance/fixtures/input.xml 

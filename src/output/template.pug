@@ -1,13 +1,23 @@
 doctype html
 html(lang="en")
   head
-    title Where Away?
+    if title
+      title.
+        !{title}
+    else
+      title Where Away?
     style
       include ./main.css
+    .
+      !{htmlHead}
   body
+    #header.
+      !{headerHTML}
     button#tab-index-reset
     #main
     script.
       const bookmarks = !{bookmarks};
     script
       include ./main.js
+    #footer.
+      !{footerHTML}

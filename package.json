@@ -1,6 +1,6 @@
 {
   "name": "where-away",
-  "version": "0.2.6",
+  "version": "0.3.0",
   "description": "Generate a keyboard-navigable personal bookmark webpage from your bookmarks manifest. ",
   "bin": "build/cli.js",
   "main": "build/cli.js",
@@ -51,6 +51,7 @@
     ]
   },
   "dependencies": {
-    "xmldom": "^0.4.0"
+    "xmldom": "^0.4.0",
+    "yargs-parser": "^20.2.4"
   }
 }
