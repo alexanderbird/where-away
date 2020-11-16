@@ -11,6 +11,6 @@
   "author": "",
   "license": "SEE LICENSE IN ../LICENSE",
   "devDependencies": {
-    "where-away": "file:.."
+    "where-away": "0.3.1"
   }
 }
