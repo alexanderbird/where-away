@@ -5,6 +5,13 @@
     <link key="n" href="https://www.npmjs.com/package/where-away" label="npm"/>
     <link key="g" href="https://github.com/alexanderbird/where-away/" label="Github" />
   </group>
+  <group key="s" label="something highly nested">
+    <group key="m" label="many levels deep">
+      <group key="o" label="one inside the other">
+        <link key="g" href="https://google.com" label="link to Google" />
+      </group>
+    </group>
+  </group>
   <group key="e" label="emoji tools">
     <link key="e" href="https://emojipedia.org/" label="Emojipedia (good keyword search)" />
     <link key="w" href="http://www.amp-what.com/" label="&amp;what; (emoji + lots of other unicode characters)" />
