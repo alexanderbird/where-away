@@ -38,7 +38,7 @@ jobs:
           name: test-results
           path: artifacts
       - name: Deploy demo site with Netlify
-        run: curl -X POST -d {} https://api.netlify.com/build_hooks/5fb216a7f97cbd3260b7bdcd
+        run: curl -X POST -d {} https://api.netlify.com/build_hooks/5fb218abe07ac73e52a803a7
 
   publish-test-results:
     name: "Publish Test Results"
