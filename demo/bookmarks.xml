@@ -5,12 +5,12 @@
     <link key="n" href="https://www.npmjs.com/package/where-away" label="npm"/>
     <link key="g" href="https://github.com/alexanderbird/where-away/" label="Github" />
   </group>
-  <group key="e" label="emoji tools">
+  <group key="e" label="Emoji tools">
     <link key="e" href="https://emojipedia.org/" label="Emojipedia (good keyword search)" />
     <link key="w" href="http://www.amp-what.com/" label="&amp;what; (emoji + lots of other unicode characters)" />
     <link key="t" href="https://thumb.codes/" label="Thumb Codes (search to clipboard without touching your mouse)" />
   </group>
-  <group key="s" label="example of nesting several levels deep">
+  <group key="s" label="Example of nesting several levels deep">
     <group key="m" label="many levels deep">
       <group key="o" label="one inside the other">
         <link key="g" href="https://google.com" label="link to Google" />
