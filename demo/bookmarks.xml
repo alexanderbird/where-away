@@ -1,18 +1,27 @@
 <bookmarks>
   <group key="p" label="Package Info">
     <link key="b" href="https://bundlephobia.com/result?p=where-away@latest" label="Bundlephobia (package size and dependencies)" />
-    <link key="d" href="https://github.com/alexanderbird/where-away/tree/main/doc/adr" label="Design Decisions"/>
-    <link key="n" href="https://www.npmjs.com/package/where-away" label="npm"/>
+    <link key="d" href="https://github.com/alexanderbird/where-away/tree/main/doc/adr" label="Design Decisions" />
+    <link key="n" href="https://www.npmjs.com/package/where-away" label="npm" />
     <link key="g" href="https://github.com/alexanderbird/where-away/" label="Github" />
   </group>
   <group key="d" label="Demo Info: what makes this site work?">
     <link
       key="i"
       href="https://github.com/alexanderbird/where-away/blob/main/demo/bookmarks.xml"
-      label="What input produced this page?"/>
+      label="What input produced this page?" />
     <link
-      key="r"
+      key="a"
       href="https://github.com/alexanderbird/where-away/blob/main/demo/package.json#L9"
-      label="What command arguments were used to produce this page?"/>
+      label="What cli arguments were used to produce this page?" />
+    <link
+      key="c"
+      href="https://github.com/alexanderbird/where-away/blob/main/src/output/main.css#L1-L2"
+      label="How do I customize the color scheme?" />
+  </group>
+  <group key="o" label="Other things Where Away? can do">
+    <link key="p"
+      href="https://www.google.com/search?q={{ Google Search Term }}"
+      label="Parameterized bookmark (in this case: google search)" />
   </group>
 </bookmarks>

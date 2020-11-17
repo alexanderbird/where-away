@@ -1,7 +1,5 @@
 # TODO
 
-- document the themeing options in the demo (link to github css for custom
-  properties)
 - clean up cli arguments
   - input xml should be a file name not stdin
   - add support for a json config file (cli args override json config?)

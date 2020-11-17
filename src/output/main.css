@@ -1,4 +1,5 @@
 :root {
+  /* colors can be overriden in a <style> block passed in the --html-head string cli argument */
   --highlight-color: #FFA;
   --bookmark-color: aliceblue;
   --bookmark-emphasis-color: lightblue;
