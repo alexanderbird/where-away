@@ -37,12 +37,10 @@ jobs:
         with:
           name: test-results
           path: artifacts
-      - name: Deploy demo site with Netlify
-        run: .github_workflow_scripts/release_netlify_build.sh
-        env:
-          NETLIFY_API: https://api.netlify.com/api/v1
-          USER_AGENT: "User-Agent: where-away (alex@alexanderbird.software)"
-          SITE_ID: 3f24de7f-67aa-4db0-b1a3-ec2e79195ff8
+      - name: Push to netlify branch to trigger a demo site deploy
+        run: |
+          git checkout -b netlify
+          git push origin netlify:netlify
 
   publish-test-results:
     name: "Publish Test Results"
