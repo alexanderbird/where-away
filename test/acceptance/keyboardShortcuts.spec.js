@@ -9,25 +9,13 @@ describe('keyboard navigation', () => {
   afterAll(async () => { await sandbox.close(); });
 
   describe('handling keydown', () => {
-    it('focusses the appropriate bookmark', async () => {
+    it('adds the \'keydown\' class to only the appropriate bookmark', async () => {
       const page = await sandbox.openHtmlOutput();
       await keydown(page, linkData.parameter.key);
-      const focussedElementText = await page.evaluate(() => document.activeElement.textContent);
-      expect(focussedElementText).toEqual(linkData.parameter.label);
-    });
-
-    it('adds the \'keydown\' class to the appropriate bookmark', async () => {
-      const page = await sandbox.openHtmlOutput();
-      await keydown(page, linkData.parameter.key);
-      const focussedElementClasses = await page.evaluate(() => Array.from(document.activeElement.classList.values()));
-      expect(focussedElementClasses).toContain('keydown');
-    });
-
-    it('does not add the \'keydown\' class to any other elements', async () => {
-      const page = await sandbox.openHtmlOutput();
-      await keydown(page, linkData.parameter.key);
-      const countOfElementsWithKeydownClass = await page.evaluate(() => document.querySelectorAll('.keydown').length);
-      expect(countOfElementsWithKeydownClass).toEqual(1);
+      const keydownElementsTextContent = await page.evaluate(() => Array.from(document.querySelectorAll('.keydown')).map(n => n.textContent));
+      expect(keydownElementsTextContent).toEqual([
+        linkData.parameter.label
+      ]);
     });
 
     it('applies the \'keydown\' class to no elements when there is no bookmark that matches the key pressed', async () => {

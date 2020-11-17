@@ -66,7 +66,6 @@ function onKeyUp({ key }) {
 function onKeyDown({ key }) {
   const bookmark = document.querySelector(`.bookmark[data-keyboard-shortcut='${key}']`);
   if (bookmark) {
-    bookmark.focus();
     bookmark.classList.add('keydown');
   }
 }
