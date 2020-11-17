@@ -14,7 +14,6 @@
     <group key="m" label="many levels deep">
       <group key="o" label="one inside the other">
         <link key="g" href="https://google.com" label="link to Google" />
-        <link key="x" href="https://xkcd.com" label="link to XKCD comics" />
       </group>
     </group>
   </group>
