@@ -22,9 +22,11 @@ jobs:
       - run: npm run test:unit
       - run: npm run test:acceptance:local
       - uses: JS-DevTools/npm-publish@v1
+        name: Publish to npm
         with:
           token: ${{ secrets.NPM_TOKEN }}
       - uses: nick-invision/retry@v2
+        name: Run npm run test:acceptance:production (retry on failure)
         env:
           INPUT_TOKEN: ''
         with:
@@ -39,8 +41,7 @@ jobs:
           path: artifacts
       - name: Push to netlify branch to trigger a demo site deploy
         run: |
-          git checkout -b netlify
-          git push origin netlify:netlify
+          git push origin main:netlify --force
 
   publish-test-results:
     name: "Publish Test Results"
