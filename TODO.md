@@ -8,4 +8,7 @@
   - so that folks using it don't have to remember what they pressed while
     they're adding parameters
 - do a once-over of the documentation
+- add support for specifying which occurance of the key to emphasize (so you can
+  choose something other than the first occurance).
+  - Update demo to use this for "What cli **a**rguments..."
 - release 1.0.0
