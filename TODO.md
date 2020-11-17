@@ -1,6 +1,5 @@
 # TODO
 
-- support browser back button by storing the path in the url
 - update styles incl. focus indicator and color scheme
   - expose theme colors as overridable custom properties
 - clean up cli arguments

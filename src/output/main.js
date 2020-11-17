@@ -1,18 +1,31 @@
-let path = '';
+class State {
+  getPath() {
+    return window.location.hash.slice(1);
+  }
+
+  setPath(path) {
+    const url = new URL(window.location);
+    url.hash = path;
+    window.history.pushState({}, '', url);
+  }
+}
+
+const state = new State();
+
 function addToPath(anchor) {
   const character = anchor.dataset.keyboardShortcut;
-  path = path + character;
+  state.setPath(state.getPath() + character);
   render();
 }
 
 function removeLeafNodeFromPath() {
-  path = path.slice(0, -1);
+  state.setPath(state.getPath().slice(0, -1));
   render();
 }
 
 function render() {
   const container = document.querySelector('#main');
-  container.innerHTML = bookmarks[path];
+  container.innerHTML = bookmarks[state.getPath()];
   attachUnobtrusiveJavascript(container);
   chooseCorrectFocus(container);
 }
@@ -35,7 +48,7 @@ function attachUnobtrusiveJavascript(container) {
   });
 }
 
-document.addEventListener('keyup', ({ key }) => {
+function onKeyUp({ key }) {
   Array.from(document.querySelectorAll('.keydown'))
     .forEach(e => e.classList.remove('keydown'));
 
@@ -48,14 +61,17 @@ document.addEventListener('keyup', ({ key }) => {
   if (bookmark) {
     bookmark.click();
   }
-});
+}
 
-document.addEventListener('keydown', ({ key }) => {
+function onKeyDown({ key }) {
   const bookmark = document.querySelector(`.bookmark[data-keyboard-shortcut='${key}']`);
   if (bookmark) {
     bookmark.focus();
     bookmark.classList.add('keydown');
   }
-});
+}
 
+document.addEventListener('keyup', onKeyUp);
+document.addEventListener('keydown', onKeyDown);
 document.addEventListener('DOMContentLoaded', render);
+window.addEventListener('hashchange', render);
