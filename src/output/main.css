@@ -54,6 +54,7 @@ body {
   text-align: center;
 }
 
+#main .bookmark:focus,
 #main .bookmark:hover {
   background-color: lightblue;
 }
