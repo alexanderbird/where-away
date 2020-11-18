@@ -25,22 +25,10 @@ describe('injecting custom html', () => {
   })
   afterAll(async () => { await sandbox.close(); });
 
-  it('has a header container element as the first child of body', async () => {
+  it('supports overriding the title', async () => {
     const page = await sandbox.openHtmlOutput();
-    const firstChild = await page.evaluate(() => {
-      const first = Array.from(document.body.childNodes).filter(node => node.nodeName !== '#text')[0];
-      return `${first.nodeName}#${first.id}`;
-    });
-    expect(firstChild).toEqual('DIV#header');
-  });
-
-  it('has a footer container element as the last child of body', async () => {
-    const page = await sandbox.openHtmlOutput();
-    const lastChild = await page.evaluate(() => {
-      const last = Array.from(document.body.childNodes).filter(node => node.nodeName !== '#text').slice(-1)[0];
-      return `${last.nodeName}#${last.id}`;
-    });
-    expect(lastChild).toEqual('DIV#footer');
+    const title = await page.evaluate(() => document.title);
+    expect(title).toEqual('where-away Test Sandbox');
   });
 
   it('injects the header argument into the header element', async () => {
@@ -55,18 +43,12 @@ describe('injecting custom html', () => {
     expect(footerHTML).toEqual('created in <code>test/acceptance/help/create_sandbox.sh</code>');
   });
 
-  it('supports overriding the title', async () => {
-    const page = await sandbox.openHtmlOutput();
-    const title = await page.evaluate(() => document.title);
-    expect(title).toEqual('where-away Test Sandbox');
-  });
-
   it('injects the html head argument into the html head', async () => {
     const page = await sandbox.openHtmlOutput();
     const metaTags = await page.evaluate(() => Array.from(document.querySelectorAll('meta')).map(tag => tag.outerHTML));
-    expect(metaTags).toEqual([
+    expect(metaTags).toEqual(expect.arrayContaining([
       '<meta name="twitter:title" content="Sandbox">',
       '<meta name="twitter:description" content="The Test Sandbox">',
-    ]);
+    ]));
   });
 });
