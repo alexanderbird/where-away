@@ -63,23 +63,21 @@ body {
   margin: var(--margin);
   padding: 10px;
   text-align: center;
-}
-
-#main .bookmark:focus {
-  background-color: var(--bookmark-emphasis-color);
-}
-
-#main .bookmark {
   z-index: 1;
 }
 
 #main .bookmark:focus {
-  z-index: 2;
+  background-color: var(--bookmark-emphasis-color);
   outline: none;
   border-width: var(--emphasis-border-width);
   border-style: solid;
   border-color: var(--bookmark-emphasis-color-darker, blue);
   margin: calc(var(--margin) - var(--emphasis-border-width));
+}
+
+#main .bookmark.keydown,
+#main .bookmark:focus {
+  z-index: 2;
 }
 
 #main .bookmark strong {
