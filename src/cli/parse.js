@@ -1,36 +1,31 @@
 const { DOMParser } = require('xmldom');
 
-function getAttributes(domDocumentAttributes) {
-  return Object.values(domDocumentAttributes)
-    .reduce((all, one) => ({
-      ...all,
-      [one.name]: one.value
-    }), {});
-}
+const {
+  verifyNoUnsupportedAttributes,
+  verifyNodeType,
+} = require('./parse/validators');
+const { getAttributes } = require('./parse/getAttributes');
+const { NodeTransformer } = require('./parse/NodeTransformer');
+const { parseXml } = require('./parse/parseXml');
+const { Transformer } = require('./parse/Transformer');
 
-function isValidNode(node) {
-  return node.nodeName !== '#text';
-}
-
-function objectify(stuff) {
-  const { href, key: rawKey, label } = getAttributes(stuff.attributes);
-  const key = rawKey.toLowerCase();
-  if (stuff.nodeName === 'link') {
-    return { href, key, label }
-  }
-
-  if (stuff.nodeName === 'group') {
-    return { label, key, children: Array.from(stuff.childNodes).filter(isValidNode).map(objectify) }
-  }
-
-  throw new Error(`don't know what to do with ${stuff}`);
-}
+const transformer = new Transformer([
+  new NodeTransformer('link', (transformer, { parent, node, key, label, href, ...unusedAttributes }) => {
+    verifyNoUnsupportedAttributes(node, unusedAttributes);
+    return { label, key, href };
+  }),
+  new NodeTransformer('group', (transformer, { parent, node, key, label, ...unusedAttributes }) => {
+    verifyNoUnsupportedAttributes(node, unusedAttributes);
+    const children = transformer.transformChildren(node);
+    return { label, key, children };
+  })
+]);
 
 function parse(xml) {
-  const document = new DOMParser().parseFromString(xml, 'application/xml')
-  return Array.from(document.lastChild.childNodes).filter(isValidNode).map(objectify);
+  const root = parseXml(xml).lastChild;
+  verifyNodeType(root, ['bookmarks']);
+  verifyNoUnsupportedAttributes(root, getAttributes(root.attributes));
+  return transformer.transformChildren(root);
 }
 
-module.exports = { parse }
-
-
+module.exports = { parse };

@@ -1,20 +1,5 @@
 # TODO
 
-- add validation and defaults
-  - use the first character of the label as the key if
-      - no key is provided
-      - the key is an empty string
-  - root node must be `<bookmark>`
-    - children keys must be unique
-  - `<link>`
-    - cannot have children
-    - must have href
-    - must have label
-    - key must be no more than one character long
-  - `<group>`
-    - must have label
-    - key must be no more than one character long
-    - children keys must be unique
 - add support for specifying which occurance of the key to emphasize (so you can
   choose something other than the first occurance).
   - Update demo to use this for "What cli **a**rguments..."
