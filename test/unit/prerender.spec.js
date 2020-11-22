@@ -1,12 +1,12 @@
 const { JSDOM } = require('jsdom');
 
-const { transform } = require('../../src/cli/transform');
+const { prerender } = require('../../src/cli/prerender');
 
 
-describe('transform', () => {
+describe('prerender', () => {
   it('produces an html string with anchor tags', () => {
     const input = [{ href: 'https://foo.com', key: 'a', label: 'First Link' }];
-    const actual = transform(input);
+    const actual = prerender(input);
     expect(summarizeHTML(actual[''])).toEqual([expect.objectContaining({
       nodeName: 'button',
       attributes: expect.objectContaining({
@@ -19,7 +19,7 @@ describe('transform', () => {
 
   it('produces an anchor tag for parameterized links', () => {
     const input = [{ href: 'https://foo.com/{{ Favourite Fruit or Appliance }}/search?where=here', key: 'x', label: 'Fruits and Appliances' }];
-    const actual = transform(input);
+    const actual = prerender(input);
     expect(summarizeHTML(actual['x'])).toEqual([expect.objectContaining({
       nodeName: 'input',
       attributes: expect.objectContaining({
@@ -35,7 +35,7 @@ describe('transform', () => {
 
   it('produces a parent tag for parameterized links', () => {
     const input = [{ href: 'https://foo.com/{{ Favourite Fruit or Appliance }}/search?where=here', key: 'x', label: 'Fruits and Appliances' }];
-    const actual = transform(input);
+    const actual = prerender(input);
     expect(summarizeHTML(actual[''])).toEqual([expect.objectContaining({
       nodeName: 'button',
       attributes: expect.objectContaining({
@@ -48,7 +48,7 @@ describe('transform', () => {
 
   it('produces an anchor tag for group nodes', () => {
     const input = [{ children: [], key: 'y', label: 'A Group of Bookmarks' }];
-    const actual = transform(input);
+    const actual = prerender(input);
     expect(summarizeHTML(actual[''])).toEqual([expect.objectContaining({
       nodeName: 'button',
       attributes: expect.objectContaining({
@@ -65,7 +65,7 @@ describe('transform', () => {
       { href: 'https://bar.com', key: 'm', label: 'BARBAR' },
       { href: 'https://baz.com', key: 'n', label: 'le bazzoo' }
     ];
-    const actual = transform(input);
+    const actual = prerender(input);
     expect(summarizeHTML(actual[''])).toEqual([
       expect.objectContaining({ nodeName: 'button', textContent: 'The Foo' }),
       expect.objectContaining({ nodeName: 'button', textContent: 'BARBAR' }),
@@ -88,7 +88,7 @@ describe('transform', () => {
         input: { children: [], key: 'a', label: 'anchor' }
       }
     ].forEach(({ testCase, input }) => it(`adds the 'bookmark' class to ${testCase} nodes`, () => {
-      const actual = transform([input]);
+      const actual = prerender([input]);
       expect(summarizeHTML(actual[''])[0].attributes.class).toEqual('bookmark');
     }));
   });
@@ -108,13 +108,13 @@ describe('transform', () => {
     ];
 
     it('produces objects keys for each unique path', () => {
-      const actual = transform(input);
+      const actual = prerender(input);
 
       expect(Object.keys(actual).sort()).toEqual(['', '1', '1y', '1ym', '1z']);
     });
 
     it('produces the right html for nested paths', () => {
-      const actual = transform(input);
+      const actual = prerender(input);
 
       expect(summarizeHTML(actual['1ym'])).toEqual([expect.objectContaining({
         nodeName: 'button',
@@ -161,7 +161,7 @@ describe('transform', () => {
       },
     ].forEach(({ testCase, input, expected }) => {
       it(`emphasizes the first occurrence of the key for ${testCase}`, () => {
-        const actual = transform(input);
+        const actual = prerender(input);
         expect(summarizeHTML(actual[''])[0].innerHTML).toEqual(expected);
       });
     });

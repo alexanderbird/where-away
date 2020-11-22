@@ -1,4 +1,4 @@
-function transform(data) {
+function prerender(data) {
   const result = {};
   function addToResult(path, html) {
     result[path] = (result[path] || '') + html;
@@ -39,4 +39,4 @@ function emphasizeKey(label, key) {
   return label.replace(keyPattern, `<strong>$&</strong>`);
 }
 
-module.exports = { transform };
+module.exports = { prerender };
