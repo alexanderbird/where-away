@@ -5,8 +5,8 @@ describe('parse', () => {
     const xml = `
       <bookmarks>
         <link key="a" href="foo" label="First Link"></link>
-        <group key="b" label="Group">
-          <link key="b" href="c" label="child"></link> 
+        <group key="b" label="Group" emphasize-nth="1">
+          <link key="b" href="c" label="child" emphasize-nth="3"></link> 
         </group> 
       </bookmarks>
     `;
@@ -19,11 +19,13 @@ describe('parse', () => {
       {
         label: 'Group',
         key: 'b',
+        emphasizeNth: 1,
         children: [
           {
             href: 'c',
             key: 'b',
-            label: 'child'
+            label: 'child',
+            emphasizeNth: 3,
           }
         ]
       }
@@ -37,6 +39,17 @@ describe('parse', () => {
       href: 'foo',
       key: 'q',
       label: 'First Link'
+    }];
+    expect(parse(xml)).toEqual(expected);
+  });
+
+  it('converts the emphasize-nth to an integer', () => {
+    const xml = '<bookmarks><link key="a" href="..." label="first" emphasize-nth="3.7"></link></bookmarks>';
+    const expected = [{
+      href: '...',
+      key: 'a',
+      label: 'first',
+      emphasizeNth: 3
     }];
     expect(parse(xml)).toEqual(expected);
   });

@@ -10,14 +10,22 @@ const { parseXml } = require('./parse/parseXml');
 const { Transformer } = require('./parse/Transformer');
 
 const transformer = new Transformer([
-  new NodeTransformer('link', (transformer, { parent, node, key, label, href, ...unusedAttributes }) => {
+  new NodeTransformer('link', (transformer, { parent, node, key, label, href, emphasizeNth, ...unusedAttributes }) => {
     verifyNoUnsupportedAttributes(node, unusedAttributes);
-    return { label, key, href };
+    const result = { label, key, href }
+    if (emphasizeNth) {
+      result.emphasizeNth = parseInt(emphasizeNth);
+    }
+    return result;
   }),
-  new NodeTransformer('group', (transformer, { parent, node, key, label, ...unusedAttributes }) => {
+  new NodeTransformer('group', (transformer, { parent, node, key, label, emphasizeNth, ...unusedAttributes }) => {
     verifyNoUnsupportedAttributes(node, unusedAttributes);
     const children = transformer.transformChildren(node);
-    return { label, key, children };
+    const result = { label, key, children };
+    if (emphasizeNth) {
+      result.emphasizeNth = parseInt(emphasizeNth);
+    }
+    return result;
   })
 ]);
 

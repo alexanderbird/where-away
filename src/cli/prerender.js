@@ -9,8 +9,8 @@ function prerender(data) {
   return result;
 }
 
-function chomp(path, addToResult, { key, href, label, children }) {
-  const emphasizedLabel = emphasizeKey(label, key);
+function chomp(path, addToResult, { key, href, label, children, emphasizeNth }) {
+  const emphasizedLabel = emphasizeKey(label, key, emphasizeNth);
   if (children) {
     addToResult(path, `<button class='bookmark' data-keyboard-shortcut="${key}" onclick="addToPath(this)">${emphasizedLabel}</button>`);
     children.forEach(child => chomp(path + key, addToResult, child));
@@ -34,9 +34,31 @@ function chomp(path, addToResult, { key, href, label, children }) {
   }
 }
 
-function emphasizeKey(label, key) {
-  const keyPattern = new RegExp(key, 'i');
-  return label.replace(keyPattern, `<strong>$&</strong>`);
+function emphasizeKey(label, key, emphasizeNth = 1) {
+  if (isNaN(emphasizeNth)) {
+    throw new Error(`the value emphasizeNth for the "${label}" node cannot be interpreted as an integer; JavaScript's parseInt() method returned NaN`);
+  }
+
+  if (emphasizeNth <= 0) {
+    throw new Error(`the value emphasizeNth for the "${label}" node must be greater than zero, but was ${emphasizeNth}`);
+  }
+
+  const beforePattern = `(?:[^${key}]*${key}){${emphasizeNth - 1}}[^${key}]*`;
+  const nthKeyPattern = new RegExp(`^(?<before>${beforePattern})(?<keyMatch>${key})(?<after>.*)$`, 'i');
+  const match = label.match(nthKeyPattern);
+  if (!match) {
+    const keyPattern = new RegExp(key, 'i');
+    const keyCount = label.split(keyPattern).length - 1;
+    if (keyCount < 1) {
+      throw new Error(`key error for node "${label}": the key "${key}" does not occur in the label "${label}".`);
+    }
+    if (keyCount < emphasizeNth) {
+      throw new Error(`the value emphasizeNth for the "${label}" node cannot be greater than the number of "${key}"s in the label. There are ${keyCount} "${key}"s in the label, but emphasizeNth is ${emphasizeNth}`);
+    }
+    return label;
+  }
+  const { before, keyMatch, after } = match.groups;
+  return `${before}<strong>${keyMatch}</strong>${after}`;
 }
 
 module.exports = { prerender };

@@ -13,6 +13,7 @@
     <link
       key="a"
       href="https://github.com/alexanderbird/where-away/blob/main/demo/package.json#L9"
+      emphasize-nth="2"
       label="What cli arguments were used to produce this page?" />
     <link
       key="c"

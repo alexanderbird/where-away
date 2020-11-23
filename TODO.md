@@ -1,8 +1,5 @@
 # TODO
 
-- add support for specifying which occurance of the key to emphasize (so you can
-  choose something other than the first occurance).
-  - Update demo to use this for "What cli **a**rguments..."
 - clean up cli arguments
   - input xml should be a file name not stdin
   - add support for a json config file (cli args override json config?)
