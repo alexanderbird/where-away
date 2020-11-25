@@ -99,6 +99,7 @@ body {
   width: 1.6em;
   border-radius: 50%;
   z-index: -1;
+  transition-duration: 1s;
   transition-property: width, height;
   transition-timing-function: cubic-bezier(0.085, 0.885, 0.275, 0.930);
 }
