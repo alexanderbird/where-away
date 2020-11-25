@@ -23,6 +23,20 @@ function removeLeafNodeFromPath() {
   render();
 }
 
+function initialRender() {
+  const mainContent = bookmarks[state.getPath()];
+  if (mainContent) {
+    render();
+  } else {
+    const [_, path, lastKey] = state.getPath().match(/(.*)(.)$/) || [];
+    if (bookmarks[path]) {
+      state.setPath(path);
+      render();
+      clickOnBookmark(lastKey);
+    }
+  }
+}
+
 function render() {
   const container = document.querySelector('#main');
   container.innerHTML = bookmarks[state.getPath()];
@@ -57,6 +71,10 @@ function onKeyUp({ key }) {
     return;
   }
 
+  clickOnBookmark(key);
+}
+
+function clickOnBookmark(key) {
   const bookmark = document.querySelector(`.bookmark[data-keyboard-shortcut='${key}']`);
   if (bookmark) {
     bookmark.click();
@@ -72,5 +90,5 @@ function onKeyDown({ key }) {
 
 document.addEventListener('keyup', onKeyUp);
 document.addEventListener('keydown', onKeyDown);
-document.addEventListener('DOMContentLoaded', render);
+document.addEventListener('DOMContentLoaded', initialRender);
 window.addEventListener('hashchange', render);
